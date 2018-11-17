@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section header{
+
+    <base href="@VirtualPathUtility.ToAbsolute("~/Home")">
+}
+<script src="~/dist/runtime.bundle.js"></script>
+<script src="~/dist/vendor.chunk.js"></script>
+<script src="~/dist/polyfills.chunk.js"></script>
+<script src="~/dist/styles.chunk.js"></script>
+<script src="~/dist/main-app.chunk.js"></script>
+<app-root></app-root>
