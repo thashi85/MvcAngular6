@@ -3,7 +3,6 @@ const mvcAppPath = path.resolve(
   __dirname,
   "../MVCAngular6"
 );
-
 module.exports = {
     module: {
         rules: [
