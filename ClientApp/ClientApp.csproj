@@ -40,8 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Class2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -99,11 +97,14 @@
     <TypeScriptCompile Include="src\modules\lazy-load\lazy-load.component.ts" />
     <TypeScriptCompile Include="src\modules\lazy-load\lazy-load.module.ts" />
     <TypeScriptCompile Include="src\modules\lazy-load\main.ts" />
+    <TypeScriptCompile Include="src\modules\lazy-load\models\customer.ts" />
     <TypeScriptCompile Include="src\modules\lazy-load\order\order-routing.module.ts" />
     <TypeScriptCompile Include="src\modules\lazy-load\order\order.component.spec.ts" />
     <TypeScriptCompile Include="src\modules\lazy-load\order\order.component.ts" />
     <TypeScriptCompile Include="src\modules\lazy-load\order\order.module.ts" />
     <TypeScriptCompile Include="src\modules\services\api-request-handler.ts" />
+    <TypeScriptCompile Include="src\modules\services\customer.service.spec.ts" />
+    <TypeScriptCompile Include="src\modules\services\customer.service.ts" />
     <TypeScriptCompile Include="src\polyfills.ts" />
     <TypeScriptCompile Include="src\test.ts" />
   </ItemGroup>

@@ -1,3 +1,26 @@
 <p>
   customer works!
 </p>
+<div class="container">
+    <div class="row">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Customer Ref</th>
+                    <th scope="col">Customer Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cus of Customers">
+                    <th scope="row">1</th>
+                    <td>{{cus.Ref}}</td>
+                    <td>{{cus.Name}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>

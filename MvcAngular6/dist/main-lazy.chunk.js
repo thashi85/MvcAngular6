@@ -95,7 +95,7 @@ function Init() {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  customer works!\n</p>\n"
+module.exports = "<p>\n  customer works!\n</p>\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <table class=\"table\">\r\n            <thead class=\"thead-dark\">\r\n                <tr>\r\n                    <th scope=\"col\">#</th>\r\n                    <th scope=\"col\">Customer Ref</th>\r\n                    <th scope=\"col\">Customer Name</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr *ngFor=\"let cus of Customers\">\r\n                    <th scope=\"row\">1</th>\r\n                    <td>{{cus.Ref}}</td>\r\n                    <td>{{cus.Name}}</td>\r\n\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n\r\n\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -121,6 +121,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomerComponent", function() { return CustomerComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_customer_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/customer.service */ "./src/modules/services/customer.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -131,10 +132,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var CustomerComponent = /** @class */ (function () {
-    function CustomerComponent() {
+    function CustomerComponent(_cutomerService) {
+        this._cutomerService = _cutomerService;
     }
     CustomerComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._cutomerService.getCustomers().subscribe(function (c) { return _this.Customers = c; });
     };
     CustomerComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -142,7 +147,7 @@ var CustomerComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./customer.component.html */ "./src/modules/lazy-load/customer/customer.component.html"),
             styles: [__webpack_require__(/*! ./customer.component.scss */ "./src/modules/lazy-load/customer/customer.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_customer_service__WEBPACK_IMPORTED_MODULE_1__["CustomerService"]])
     ], CustomerComponent);
     return CustomerComponent;
 }());
@@ -211,7 +216,7 @@ var LazyLoadRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n    <nav class=\"navbar navbar-default\">\r\n        <div class=\"container-fluid\">\r\n            <!-- Brand and toggle get grouped for better mobile display -->\r\n            <div class=\"navbar-header\">\r\n                <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\r\n                    <span class=\"sr-only\">Toggle navigation</span>\r\n                    <span class=\"icon-bar\"></span>\r\n                    <span class=\"icon-bar\"></span>\r\n                    <span class=\"icon-bar\"></span>\r\n                </button>\r\n                <a class=\"navbar-brand\" href=\"#\">Lazy Loading</a>\r\n            </div>\r\n\r\n            <!-- Collect the nav links, forms, and other content for toggling -->\r\n            <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\r\n                <ul class=\"nav navbar-nav\">\r\n                    <li class=\"active\" ><a href=\"#\" routerLink=\"customer\">Customer <span class=\"sr-only\">(current)</span></a></li>\r\n                    <li><a href=\"#\" routerLink=\"orders\">Orders</a></li>\r\n                  <!--  <li class=\"dropdown\">\r\n                        <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Dropdown <span class=\"caret\"></span></a>\r\n                        <ul class=\"dropdown-menu\">\r\n                            <li><a href=\"#\">Action</a></li>\r\n                            <li><a href=\"#\">Another action</a></li>\r\n                            <li><a href=\"#\">Something else here</a></li>\r\n                            <li role=\"separator\" class=\"divider\"></li>\r\n                            <li><a href=\"#\">Separated link</a></li>\r\n                            <li role=\"separator\" class=\"divider\"></li>\r\n                            <li><a href=\"#\">One more separated link</a></li>\r\n                        </ul>\r\n                    </li>-->\r\n                </ul>\r\n              <!-- <form class=\"navbar-form navbar-left\">\r\n                    <div class=\"form-group\">\r\n                        <input type=\"text\" class=\"form-control\" placeholder=\"Search\">\r\n                    </div>\r\n                    <button type=\"submit\" class=\"btn btn-default\">Submit</button>\r\n                </form>\r\n                <ul class=\"nav navbar-nav navbar-right\">\r\n                    <li><a href=\"#\">Link</a></li>\r\n                    <li class=\"dropdown\">\r\n                        <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Dropdown <span class=\"caret\"></span></a>\r\n                        <ul class=\"dropdown-menu\">\r\n                            <li><a href=\"#\">Action</a></li>\r\n                            <li><a href=\"#\">Another action</a></li>\r\n                            <li><a href=\"#\">Something else here</a></li>\r\n                            <li role=\"separator\" class=\"divider\"></li>\r\n                            <li><a href=\"#\">Separated link</a></li>\r\n                        </ul>\r\n                    </li>\r\n                </ul>-->\r\n            </div><!-- /.navbar-collapse -->\r\n        </div><!-- /.container-fluid -->\r\n    </nav>\n</div>\n<router-outlet></router-outlet>\n"
+module.exports = "<div>\n    <nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n        <a class=\"navbar-brand\" href=\"#\">Lazy Loading</a>\r\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n            <span class=\"navbar-toggler-icon\"></span>\r\n        </button>\r\n\r\n        <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\r\n            <ul class=\"navbar-nav mr-auto\">\r\n                <li class=\"nav-item active\">\r\n                    <a class=\"nav-link\" href=\"#\" routerLink=\"customer\">Customer <span class=\"sr-only\">(current)</span></a>\r\n                </li>\r\n                <li class=\"nav-item\">\r\n                    <a class=\"nav-link\" href=\"#\" routerLink=\"orders\">Orders</a>\r\n                </li>\r\n                <!--<li class=\"nav-item dropdown\">\r\n                    <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                        Dropdown\r\n                    </a>\r\n                    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\r\n                        <a class=\"dropdown-item\" href=\"#\">Action</a>\r\n                        <a class=\"dropdown-item\" href=\"#\">Another action</a>\r\n                        <div class=\"dropdown-divider\"></div>\r\n                        <a class=\"dropdown-item\" href=\"#\">Something else here</a>\r\n                    </div>\r\n                </li>\r\n                <li class=\"nav-item\">\r\n                    <a class=\"nav-link disabled\" href=\"#\">Disabled</a>\r\n                </li>-->\r\n            </ul>\r\n            <!--<form class=\"form-inline my-2 my-lg-0\">\r\n                <input class=\"form-control mr-sm-2\" type=\"search\" placeholder=\"Search\" aria-label=\"Search\">\r\n                <button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"submit\">Search</button>\r\n            </form>-->\r\n        </div>\r\n    </nav>\n  \n<router-outlet></router-outlet>\n</div>"
 
 /***/ }),
 
@@ -280,9 +285,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _lazy_load_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lazy-load-routing.module */ "./src/modules/lazy-load/lazy-load-routing.module.ts");
-/* harmony import */ var _lazy_load_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lazy-load.component */ "./src/modules/lazy-load/lazy-load.component.ts");
-/* harmony import */ var _customer_customer_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./customer/customer.component */ "./src/modules/lazy-load/customer/customer.component.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _lazy_load_routing_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lazy-load-routing.module */ "./src/modules/lazy-load/lazy-load-routing.module.ts");
+/* harmony import */ var _lazy_load_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./lazy-load.component */ "./src/modules/lazy-load/lazy-load.component.ts");
+/* harmony import */ var _customer_customer_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./customer/customer.component */ "./src/modules/lazy-load/customer/customer.component.ts");
+/* harmony import */ var _services_customer_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../services/customer.service */ "./src/modules/services/customer.service.ts");
+/* harmony import */ var _services_api_request_handler__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../services/api-request-handler */ "./src/modules/services/api-request-handler.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -295,19 +303,27 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
+
 var LazyLoadModule = /** @class */ (function () {
     function LazyLoadModule() {
     }
     LazyLoadModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_lazy_load_component__WEBPACK_IMPORTED_MODULE_4__["LazyLoadComponent"], _customer_customer_component__WEBPACK_IMPORTED_MODULE_5__["CustomerComponent"]],
+            declarations: [_lazy_load_component__WEBPACK_IMPORTED_MODULE_5__["LazyLoadComponent"], _customer_customer_component__WEBPACK_IMPORTED_MODULE_6__["CustomerComponent"]],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-                _lazy_load_routing_module__WEBPACK_IMPORTED_MODULE_3__["LazyLoadRoutingModule"]
+                _lazy_load_routing_module__WEBPACK_IMPORTED_MODULE_4__["LazyLoadRoutingModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"]
             ],
-            providers: [],
-            bootstrap: [_lazy_load_component__WEBPACK_IMPORTED_MODULE_4__["LazyLoadComponent"]]
+            providers: [{
+                    provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HTTP_INTERCEPTORS"],
+                    useClass: _services_api_request_handler__WEBPACK_IMPORTED_MODULE_8__["APIRequestHandler"],
+                    multi: true
+                }, _services_customer_service__WEBPACK_IMPORTED_MODULE_7__["CustomerService"]],
+            bootstrap: [_lazy_load_component__WEBPACK_IMPORTED_MODULE_5__["LazyLoadComponent"]]
         })
     ], LazyLoadModule);
     return LazyLoadModule;
@@ -342,6 +358,121 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_0__["platformB
 //         return platformBrowserDynamic().bootstrapModule(LazyLoadModule);
 //     });
 //}
+
+
+/***/ }),
+
+/***/ "./src/modules/services/api-request-handler.ts":
+/*!*****************************************************!*\
+  !*** ./src/modules/services/api-request-handler.ts ***!
+  \*****************************************************/
+/*! exports provided: APIRequestHandler */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "APIRequestHandler", function() { return APIRequestHandler; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var APIRequestHandler = /** @class */ (function () {
+    function APIRequestHandler() {
+    }
+    APIRequestHandler.prototype.intercept = function (request, next) {
+        request = request.clone({
+            setHeaders: {
+                Authorization: 'Test 12345',
+                Token: 'test'
+            }
+        });
+        return next.handle(request).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (event) {
+            debugger;
+            if (event instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpResponse"] && ~~(event.status / 100) > 3) {
+                console.info('HttpResponse::event =', event, ';');
+            }
+            else {
+                console.info('event =', event, ';');
+                if (event instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpErrorResponse"]) {
+                    if (event.status === 403) {
+                        console.info('err.error =', event.error, ';');
+                    }
+                }
+            }
+            return event;
+        }));
+    };
+    APIRequestHandler = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [])
+    ], APIRequestHandler);
+    return APIRequestHandler;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/modules/services/customer.service.ts":
+/*!**************************************************!*\
+  !*** ./src/modules/services/customer.service.ts ***!
+  \**************************************************/
+/*! exports provided: CustomerService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomerService", function() { return CustomerService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var CustomerService = /** @class */ (function () {
+    function CustomerService(_http) {
+        this._http = _http;
+        console.log("****" + _environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].ApiUrl);
+    }
+    CustomerService.prototype.getCustomers = function () {
+        return this._http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].ApiUrl + "api/v1/customers").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+            var arr = [];
+            response.forEach(function (c, i) { return arr.push({ Id: c.CustomerID, Name: c.Name, Ref: c.Reference }); });
+            return arr;
+        }));
+        //.map(r => <Customer[]>r.json());
+    };
+    CustomerService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], CustomerService);
+    return CustomerService;
+}());
+
 
 
 /***/ }),
