@@ -2,10 +2,4 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-
-/ClientApp.rar
-/MvcAngular6/bin
-/MvcAngular6/obj/Debug
-/packages
 /.vs
-/ClientApp/
