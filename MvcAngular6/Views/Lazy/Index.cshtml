@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    
+}
+
+
+@section header{
+
+    <base href="@VirtualPathUtility.ToAbsolute("~/Lazy")">
+}
+<app-lazy-load></app-lazy-load>
+<script src="~/dist/runtime.bundle.js"></script>
+<script src="~/dist/vendor.chunk.js"></script>
+<script src="~/dist/polyfills.chunk.js"></script>
+<script src="~/dist/styles.chunk.js"></script>
+<script src="~/dist/main-lazy.chunk.js"></script>
+
+
