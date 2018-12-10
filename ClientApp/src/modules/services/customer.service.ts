@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Customer } from '../lazy-load/models/customer'
+import { Customer } from '../models/customer'
 import { environment } from '../../environments/environment';
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";

@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>@Page.Title</title>
+        @Styles.Render("~/Content/css")
+
+        @{
+               var BaseUrl = @VirtualPathUtility.ToAbsolute("~/");
+
+        }
+        <script type="text/javascript">
+            var baseUrl = '@BaseUrl';
+            window.apiUrl = '@System.Configuration.ConfigurationManager.AppSettings["apiUrl"]';
+
+        </script>
+        @RenderSection("head", required: false)
+    </head>
+    <body>
+        @RenderBody()
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

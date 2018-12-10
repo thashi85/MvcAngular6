@@ -5,18 +5,21 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { LazyLoadRoutingModule } from './lazy-load-routing.module';
 import { LazyLoadComponent } from './lazy-load.component';
+import { SiteLayoutModule } from '../layout/site-layout/site-layout.module';
+
 import { CustomerComponent } from './customer/customer.component';
 
 import { CustomerService } from '../services/customer.service'
 import { APIRequestHandler } from '../services/api-request-handler'
 
 @NgModule({
-  declarations: [LazyLoadComponent, CustomerComponent],
+    declarations: [LazyLoadComponent, CustomerComponent],
   imports: [
         BrowserModule,
         CommonModule,
         LazyLoadRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        SiteLayoutModule
     ],
     providers: [{
         provide: HTTP_INTERCEPTORS,
