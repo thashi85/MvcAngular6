@@ -152,7 +152,7 @@ module.exports = "<!--The content below is only a placeholder and can be replace
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAvYXBwLmNvbXBvbmVudC5zY3NzIn0= */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvbW9kdWxlcy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIn0= */"
 
 /***/ }),
 
@@ -259,14 +259,14 @@ __webpack_require__.r(__webpack_exports__);
 
 //set url from web config
 Object(_Init__WEBPACK_IMPORTED_MODULE_2__["Init"])();
-if (document.readyState === 'complete') {
-    Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_0__["platformBrowserDynamic"])().bootstrapModule(_app_module__WEBPACK_IMPORTED_MODULE_1__["AppModule"]);
-}
-else {
-    document.addEventListener('DOMContentLoaded', function () {
-        return Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_0__["platformBrowserDynamic"])().bootstrapModule(_app_module__WEBPACK_IMPORTED_MODULE_1__["AppModule"]);
-    });
-}
+Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_0__["platformBrowserDynamic"])().bootstrapModule(_app_module__WEBPACK_IMPORTED_MODULE_1__["AppModule"]);
+// if (document.readyState === 'complete') {
+//     platformBrowserDynamic().bootstrapModule(AppModule);
+//} else {
+//     document.addEventListener('DOMContentLoaded', function () {
+//        return platformBrowserDynamic().bootstrapModule(AppModule);
+//     });
+//}
 
 
 /***/ }),
@@ -289,7 +289,7 @@ module.exports = "<p>\n  test works!\n</p>\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAvdGVzdC90ZXN0LmNvbXBvbmVudC5zY3NzIn0= */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvbW9kdWxlcy9hcHAvdGVzdC90ZXN0LmNvbXBvbmVudC5zY3NzIn0= */"
 
 /***/ }),
 

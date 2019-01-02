@@ -6,6 +6,8 @@ import { environment } from '../../environments/environment';
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,5 +24,10 @@ export class CustomerService {
             return arr;
         }));
         //.map(r => <Customer[]>r.json());
+    }
+    getAssets() {
+       
+        return this._http.get("http://apidocumentation.optimosoftware.co.uk/OptimoWebAPI/Test/api/V4.1/assets?page.number=1&page.size=5&include=venue");
+         
     }
 }

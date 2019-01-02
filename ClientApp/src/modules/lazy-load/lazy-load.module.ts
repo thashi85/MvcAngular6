@@ -11,6 +11,8 @@ import { CustomerComponent } from './customer/customer.component';
 
 import { CustomerService } from '../services/customer.service'
 import { APIRequestHandler } from '../services/api-request-handler'
+import { CartService } from '../services/cart.service'
+
 
 @NgModule({
     declarations: [LazyLoadComponent, CustomerComponent],
@@ -25,7 +27,7 @@ import { APIRequestHandler } from '../services/api-request-handler'
         provide: HTTP_INTERCEPTORS,
         useClass: APIRequestHandler,
         multi: true
-    }, CustomerService],
+    }, CustomerService,CartService],
     bootstrap: [LazyLoadComponent]
 })
 export class LazyLoadModule { }

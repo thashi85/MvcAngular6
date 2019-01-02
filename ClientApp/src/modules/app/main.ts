@@ -4,13 +4,13 @@ import { Init } from '../Init'
 
 //set url from web config
 Init()
+platformBrowserDynamic().bootstrapModule(AppModule);
+// if (document.readyState === 'complete') {
+//     platformBrowserDynamic().bootstrapModule(AppModule);
 
- if (document.readyState === 'complete') {
-     platformBrowserDynamic().bootstrapModule(AppModule);
-
-} else {
-     document.addEventListener('DOMContentLoaded', function () {
-        return platformBrowserDynamic().bootstrapModule(AppModule);
-     });
-}
+//} else {
+//     document.addEventListener('DOMContentLoaded', function () {
+//        return platformBrowserDynamic().bootstrapModule(AppModule);
+//     });
+//}
 

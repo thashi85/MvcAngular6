@@ -20,7 +20,7 @@ export class APIRequestHandler implements HttpInterceptor {
             }
         });
         return next.handle(request).pipe(map((event: HttpEvent<any>) => {
-            debugger;
+          
             if (event instanceof HttpResponse && ~~(event.status / 100) > 3) {
                 console.info('HttpResponse::event =', event, ';');
             } else {

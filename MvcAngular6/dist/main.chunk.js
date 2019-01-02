@@ -1,5 +1,608 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
 
+/***/ "./dist/json-api-format/fesm5/json-api-format.js":
+/*!*******************************************************!*\
+  !*** ./dist/json-api-format/fesm5/json-api-format.js ***!
+  \*******************************************************/
+/*! exports provided: Serializer, Deserializer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Serializer", function() { return Serializer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Deserializer", function() { return Deserializer; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var JsonAPIUtil = /** @class */ (function () {
+    function JsonAPIUtil() {
+    }
+    /**
+     * @protected
+     * @param {?} attribute
+     * @return {?}
+     */
+    JsonAPIUtil.prototype.keyForAttribute = /**
+     * @protected
+     * @param {?} attribute
+     * @return {?}
+     */
+    function (attribute) {
+        var _this = this;
+        if (Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isPlainObject"])(attribute)) {
+            return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["transform"])(attribute, function (result, value, key) {
+                if (_this.isComplexType(value)) {
+                    result[_this.keyForAttribute(key)] = _this.keyForAttribute(value);
+                }
+                else {
+                    result[_this.keyForAttribute(key)] = value;
+                }
+            });
+        }
+        else if (Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isArray"])(attribute)) {
+            return attribute.map(function (attr) {
+                if (_this.isComplexType(attr)) {
+                    return _this.keyForAttribute(attr);
+                }
+                else {
+                    return attr;
+                }
+            });
+        }
+        else {
+            return attribute;
+            //if (_.isFunction(this.opts.keyForAttribute)) {
+            //    return this.opts.keyForAttribute(attribute);
+            //} else {
+            //    //TL
+            //    //return Inflector.caserizeFunc(attribute, this.opts.keyForAttribute);
+            //    return attribute;
+            //}
+        }
+    };
+    /**
+     * @protected
+     * @param {?} obj
+     * @return {?}
+     */
+    JsonAPIUtil.prototype.isComplexType = /**
+     * @protected
+     * @param {?} obj
+     * @return {?}
+     */
+    function (obj) {
+        return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isArray"])(obj) || Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isPlainObject"])(obj);
+    };
+    return JsonAPIUtil;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var JsonAPISerializerUtil = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(JsonAPISerializerUtil, _super);
+    function JsonAPISerializerUtil(collectionName, opts) {
+        if (collectionName === void 0) { collectionName = ""; }
+        if (opts === void 0) { opts = null; }
+        var _this = _super.call(this) || this;
+        _this.collectionName = collectionName;
+        _this.opts = opts;
+        _this.included = [];
+        return _this;
+    }
+    //first method which is called for serialization
+    //first method which is called for serialization
+    /**
+     * @param {?} record
+     * @return {?}
+     */
+    JsonAPISerializerUtil.prototype.perform = 
+    //first method which is called for serialization
+    /**
+     * @param {?} record
+     * @return {?}
+     */
+    function (record) {
+        return this.serializeResource(record);
+    };
+    /**
+     * @private
+     * @param {?} obj
+     * @return {?}
+     */
+    JsonAPISerializerUtil.prototype.serializeResource = /**
+     * @private
+     * @param {?} obj
+     * @return {?}
+     */
+    function (obj) {
+        var _this = this;
+        if (Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isNull"])(obj)) {
+            return null;
+        }
+        // Top-level data.
+        /** @type {?} */
+        var data = {
+            type: this.getType(obj),
+            id: String(obj[this.getId(obj)])
+        };
+        /** @type {?} */
+        var tid = this.getTid(obj);
+        if (!Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isUndefined"])(tid) && tid != null) {
+            data.tid = tid;
+        }
+        //Data attribute and relationship populate
+        Object(lodash__WEBPACK_IMPORTED_MODULE_1__["transform"])(obj, function (result, value, key) {
+            if (key.toString() != "id" && key.toString() != "type") {
+                if (!data.attributes) {
+                    data.attributes = {};
+                }
+                if (_this.isComplexType(value)) {
+                    // data.attributes[this.keyForAttribute(key)] = this.keyForAttribute(value);                    
+                    _this.serialize(data, value, key, Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isArray"])(value), _this.opts);
+                }
+                else {
+                    data.attributes[_this.keyForAttribute(key)] = value;
+                }
+            }
+        });
+        return data;
+    };
+    /**
+     * @private
+     * @param {?} dest
+     * @param {?} current
+     * @param {?} attribute
+     * @param {?} isArray
+     * @param {?} opts
+     * @return {?}
+     */
+    JsonAPISerializerUtil.prototype.serialize = /**
+     * @private
+     * @param {?} dest
+     * @param {?} current
+     * @param {?} attribute
+     * @param {?} isArray
+     * @param {?} opts
+     * @return {?}
+     */
+    function (dest, current, attribute, isArray$$1, opts) {
+        if (this.isRelationship(current)) {
+            /** @type {?} */
+            var id = current[this.getId(current)];
+            //todo tid
+            /** @type {?} */
+            var type = this.getType(current);
+            if (!(dest.relationships)) {
+                dest.relationships = {};
+            }
+            if (!dest.relationships[attribute]) {
+                dest.relationships[attribute] = {};
+            }
+            if (isArray$$1) {
+                if (!dest.relationships[attribute].data)
+                    dest.relationships[attribute].data = [];
+                dest.relationships[attribute].data.push({ 'id': id, 'type': type });
+            }
+            else {
+                if (!dest.relationships[attribute].data)
+                    dest.relationships[attribute].data = { 'id': id, 'type': type };
+            }
+            //handle include
+            /** @type {?} */
+            var incAdded = Object(lodash__WEBPACK_IMPORTED_MODULE_1__["find"])(this.included, function (inc) {
+                return inc.id == id && inc.type.toLowerCase() == type.toLowerCase();
+            });
+            if (!incAdded) {
+                this.included.push(this.serializeResource(current));
+            }
+        }
+        else {
+            dest.attributes[this.keyForAttribute(attribute)] = this.keyForAttribute(current);
+        }
+    };
+    /**
+     * @private
+     * @param {?} obj
+     * @return {?}
+     */
+    JsonAPISerializerUtil.prototype.isRelationship = /**
+     * @private
+     * @param {?} obj
+     * @return {?}
+     */
+    function (obj) {
+        return !Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isUndefined"])(obj.id) || !Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isUndefined"])(obj.tid);
+    };
+    /**
+     * @private
+     * @param {?} obj
+     * @return {?}
+     */
+    JsonAPISerializerUtil.prototype.getId = /**
+     * @private
+     * @param {?} obj
+     * @return {?}
+     */
+    function (obj) {
+        // return this.opts.id || 'id';      
+        if (!Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isUndefined"])(obj.id))
+            return 'id';
+        return 'id';
+    };
+    /**
+     * @private
+     * @param {?} obj
+     * @return {?}
+     */
+    JsonAPISerializerUtil.prototype.getTid = /**
+     * @private
+     * @param {?} obj
+     * @return {?}
+     */
+    function (obj) {
+        // return this.opts.id || 'id';
+        if (!Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isUndefined"])(obj.tid))
+            return 'tid';
+        return null;
+    };
+    /**
+     * @private
+     * @param {?} obj
+     * @return {?}
+     */
+    JsonAPISerializerUtil.prototype.getType = /**
+     * @private
+     * @param {?} obj
+     * @return {?}
+     */
+    function (obj) {
+        /** @type {?} */
+        var type = obj.type;
+        if (Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isUndefined"])(type)) {
+            type = obj.constructor.name;
+        }
+        return type;
+    };
+    return JsonAPISerializerUtil;
+}(JsonAPIUtil));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var Serializer = /** @class */ (function () {
+    function Serializer(collectionName, opts) {
+        if (collectionName === void 0) { collectionName = ""; }
+        if (opts === void 0) { opts = null; }
+        this.collectionName = collectionName;
+        this.opts = opts;
+        this.payload = {};
+    }
+    /**
+     * @param {?} data
+     * @return {?}
+     */
+    Serializer.prototype.serialize = /**
+     * @param {?} data
+     * @return {?}
+     */
+    function (data) {
+        if (Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isArray"])(data)) {
+            return this.collection(data);
+        }
+        else {
+            return this.resource(data);
+        }
+    };
+    /**
+     * @param {?} data
+     * @return {?}
+     */
+    Serializer.prototype.collection = /**
+     * @param {?} data
+     * @return {?}
+     */
+    function (data) {
+        var _this = this;
+        this.payload.data = [];
+        /** @type {?} */
+        var serializerUtils = new JsonAPISerializerUtil(this.collectionName, this.opts);
+        //data mapping
+        data.forEach(function (record) {
+            _this.payload.data.push(serializerUtils.perform(record));
+        });
+        //include mapping
+        if (serializerUtils.included.length > 0) {
+            this.payload.included = serializerUtils.included;
+        }
+        return this.payload;
+    };
+    /**
+     * @param {?} data
+     * @return {?}
+     */
+    Serializer.prototype.resource = /**
+     * @param {?} data
+     * @return {?}
+     */
+    function (data) {
+        /** @type {?} */
+        var serializerUtils = new JsonAPISerializerUtil(this.collectionName, this.opts);
+        //data mapping
+        this.payload.data = serializerUtils.perform(data);
+        //include mapping
+        if (serializerUtils.included.length > 0) {
+            this.payload.included = serializerUtils.included;
+        }
+        return this.payload;
+    };
+    return Serializer;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var JsonAPIDeserializerUtil = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(JsonAPIDeserializerUtil, _super);
+    function JsonAPIDeserializerUtil(jsonapi) {
+        var _this = _super.call(this) || this;
+        _this.jsonapi = jsonapi;
+        _this.alreadyIncluded = [];
+        return _this;
+    }
+    /**
+     * @param {?} data
+     * @return {?}
+     */
+    JsonAPIDeserializerUtil.prototype.perform = /**
+     * @param {?} data
+     * @return {?}
+     */
+    function (data) {
+        return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["extend"])(this.extractAttributes(data), this.extractRelationships(data));
+    };
+    /**
+     * @private
+     * @param {?} from
+     * @return {?}
+     */
+    JsonAPIDeserializerUtil.prototype.extractAttributes = /**
+     * @private
+     * @param {?} from
+     * @return {?}
+     */
+    function (from) {
+        if (!from.attributes) {
+            return;
+        }
+        /** @type {?} */
+        var dest = this.keyForAttribute(from.attributes || {});
+        if ('id' in from) {
+            dest.id = from.id;
+        }
+        if ('type' in from) {
+            dest.type = from.type;
+        }
+        return dest;
+    };
+    /**
+     * @private
+     * @param {?} from
+     * @return {?}
+     */
+    JsonAPIDeserializerUtil.prototype.extractRelationships = /**
+     * @private
+     * @param {?} from
+     * @return {?}
+     */
+    function (from) {
+        var _this = this;
+        debugger;
+        if (!from.relationships) {
+            return;
+        }
+        /** @type {?} */
+        var dest = {};
+        Object.keys(from.relationships)
+            .map(function (key) {
+            /** @type {?} */
+            var relationship = from.relationships[key];
+            if (relationship.data === null) {
+                return dest[_this.keyForAttribute(key)] = null;
+            }
+            else if (Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isArray"])(relationship.data)) {
+                /** @type {?} */
+                var includes = relationship.data
+                    .map(function (relationshipData) {
+                    return _this.extractIncludes(relationshipData, key, from);
+                });
+                if (includes) {
+                    dest[_this.keyForAttribute(key)] = includes;
+                }
+            }
+            else {
+                /** @type {?} */
+                var includes = _this.extractIncludes(relationship.data, key, from);
+                if (includes) {
+                    return dest[_this.keyForAttribute(key)] = includes;
+                }
+            }
+        });
+        return dest;
+    };
+    /**
+     * @private
+     * @param {?} relationshipData
+     * @param {?} relationshipName
+     * @param {?} from
+     * @return {?}
+     */
+    JsonAPIDeserializerUtil.prototype.extractIncludes = /**
+     * @private
+     * @param {?} relationshipData
+     * @param {?} relationshipName
+     * @param {?} from
+     * @return {?}
+     */
+    function (relationshipData, relationshipName, from) {
+        /** @type {?} */
+        var included = this.findIncluded(relationshipData, relationshipName, from);
+        /** @type {?} */
+        var valueForRelationship = this.getValueForRelationship(relationshipData, included);
+        return valueForRelationship;
+    };
+    /**
+     * @private
+     * @param {?} relationshipData
+     * @param {?} relationshipName
+     * @param {?} from
+     * @return {?}
+     */
+    JsonAPIDeserializerUtil.prototype.findIncluded = /**
+     * @private
+     * @param {?} relationshipData
+     * @param {?} relationshipName
+     * @param {?} from
+     * @return {?}
+     */
+    function (relationshipData, relationshipName, from) {
+        if (!this.jsonapi.included || !relationshipData) {
+            return null;
+        }
+        /** @type {?} */
+        var included = Object(lodash__WEBPACK_IMPORTED_MODULE_1__["find"])(this.jsonapi.included, {
+            id: relationshipData.id,
+            type: relationshipData.type
+        });
+        /** @type {?} */
+        var includedObject = {
+            to: {
+                id: from.id,
+                type: from.type
+            },
+            from: Object.assign({}, relationshipData),
+            relation: relationshipName
+        };
+        // Check if the include is already processed (prevent circular references).
+        if (Object(lodash__WEBPACK_IMPORTED_MODULE_1__["find"])(this.alreadyIncluded, includedObject)) {
+            return null;
+        }
+        else {
+            this.alreadyIncluded.push(includedObject);
+        }
+        if (included) {
+            return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["extend"])(this.extractAttributes(included), this.extractRelationships(included));
+        }
+        else {
+            return {
+                id: relationshipData.id,
+                type: relationshipData.type
+            };
+        }
+    };
+    /**
+     * @private
+     * @param {?} relationshipData
+     * @param {?} included
+     * @return {?}
+     */
+    JsonAPIDeserializerUtil.prototype.getValueForRelationship = /**
+     * @private
+     * @param {?} relationshipData
+     * @param {?} included
+     * @return {?}
+     */
+    function (relationshipData, included) {
+        //if (this.opts && relationshipData && this.opts[relationshipData.type]) {
+        //    let valueForRelationshipFct = this.opts[relationshipData.type]
+        //        .valueForRelationship;
+        //    return valueForRelationshipFct(relationshipData, included);
+        //} else 
+        {
+            return included;
+        }
+    };
+    return JsonAPIDeserializerUtil;
+}(JsonAPIUtil));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var Deserializer = /** @class */ (function () {
+    function Deserializer(opts) {
+        if (opts === void 0) { opts = {}; }
+        this.opts = opts;
+    }
+    /**
+     * @param {?} jsonapi
+     * @return {?}
+     */
+    Deserializer.prototype.deserialize = /**
+     * @param {?} jsonapi
+     * @return {?}
+     */
+    function (jsonapi) {
+        if (Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isArray"])(jsonapi.data)) {
+            return this.collection(jsonapi);
+        }
+        else {
+            return this.resource(jsonapi);
+        }
+    };
+    /**
+     * @param {?} jsonapi
+     * @return {?}
+     */
+    Deserializer.prototype.collection = /**
+     * @param {?} jsonapi
+     * @return {?}
+     */
+    function (jsonapi) {
+        return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["map"])(jsonapi.data, function (d) {
+            return new JsonAPIDeserializerUtil(jsonapi).perform(d);
+        });
+    };
+    /**
+     * @param {?} jsonapi
+     * @return {?}
+     */
+    Deserializer.prototype.resource = /**
+     * @param {?} jsonapi
+     * @return {?}
+     */
+    function (jsonapi) {
+        return new JsonAPIDeserializerUtil(jsonapi).perform(jsonapi.data);
+    };
+    return Deserializer;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+
+//# sourceMappingURL=json-api-format.js.map
+
+/***/ }),
+
 /***/ "./src/$$_lazy_route_resource lazy recursive":
 /*!**********************************************************!*\
   !*** ./src/$$_lazy_route_resource lazy namespace object ***!
@@ -106,7 +709,7 @@ module.exports = "<div class=\"container\">\r\n    <footer>\r\n        <p>&copy;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJsYXlvdXQvc2l0ZS1sYXlvdXQvc2l0ZS1mb290ZXIvc2l0ZS1mb290ZXIuY29tcG9uZW50LnNjc3MifQ== */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvbW9kdWxlcy9sYXlvdXQvc2l0ZS1sYXlvdXQvc2l0ZS1mb290ZXIvc2l0ZS1mb290ZXIuY29tcG9uZW50LnNjc3MifQ== */"
 
 /***/ }),
 
@@ -169,7 +772,7 @@ module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-primary\">
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJsYXlvdXQvc2l0ZS1sYXlvdXQvc2l0ZS1oZWFkZXIvc2l0ZS1oZWFkZXIuY29tcG9uZW50LnNjc3MifQ== */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvbW9kdWxlcy9sYXlvdXQvc2l0ZS1sYXlvdXQvc2l0ZS1oZWFkZXIvc2l0ZS1oZWFkZXIuY29tcG9uZW50LnNjc3MifQ== */"
 
 /***/ }),
 
@@ -232,7 +835,7 @@ module.exports = "<site-header></site-header>\r\n<router-outlet></router-outlet>
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJsYXlvdXQvc2l0ZS1sYXlvdXQvc2l0ZS1sYXlvdXQuY29tcG9uZW50LnNjc3MifQ== */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvbW9kdWxlcy9sYXlvdXQvc2l0ZS1sYXlvdXQvc2l0ZS1sYXlvdXQuY29tcG9uZW50LnNjc3MifQ== */"
 
 /***/ }),
 
@@ -344,7 +947,7 @@ module.exports = "<p>\n  customer works!\n</p>\n<div class=\"container\">\r\n   
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJsYXp5LWxvYWQvY3VzdG9tZXIvY3VzdG9tZXIuY29tcG9uZW50LnNjc3MifQ== */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvbW9kdWxlcy9sYXp5LWxvYWQvY3VzdG9tZXIvY3VzdG9tZXIuY29tcG9uZW50LnNjc3MifQ== */"
 
 /***/ }),
 
@@ -360,6 +963,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomerComponent", function() { return CustomerComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_customer_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/customer.service */ "./src/modules/services/customer.service.ts");
+/* harmony import */ var _services_cart_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/cart.service */ "./src/modules/services/cart.service.ts");
+/* harmony import */ var json_api_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! json-api-format */ "./dist/json-api-format/fesm5/json-api-format.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -371,13 +976,27 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var CustomerComponent = /** @class */ (function () {
-    function CustomerComponent(_cutomerService) {
+    function CustomerComponent(_cutomerService, _cartService) {
         this._cutomerService = _cutomerService;
+        this._cartService = _cartService;
     }
     CustomerComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this._cutomerService.getCustomers().subscribe(function (c) { return _this.Customers = c; });
+        this._cutomerService.getCustomers().subscribe(function (c) {
+            _this.Customers = c;
+            _this._cartService.customer = _this.Customers[0];
+        });
+        this._cutomerService.getAssets().subscribe(function (s) {
+            var json = new json_api_format__WEBPACK_IMPORTED_MODULE_3__["Deserializer"]().deserialize(s);
+            console.log(json);
+            //var arr = new Serializer("asset", { id: "", attributes: [], pluralizeType: false }).serialize(json);
+            var arr = new json_api_format__WEBPACK_IMPORTED_MODULE_3__["Serializer"]().serialize(json);
+            console.log('serilized object');
+            console.log(arr);
+        });
     };
     CustomerComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -385,7 +1004,7 @@ var CustomerComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./customer.component.html */ "./src/modules/lazy-load/customer/customer.component.html"),
             styles: [__webpack_require__(/*! ./customer.component.scss */ "./src/modules/lazy-load/customer/customer.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_customer_service__WEBPACK_IMPORTED_MODULE_1__["CustomerService"]])
+        __metadata("design:paramtypes", [_services_customer_service__WEBPACK_IMPORTED_MODULE_1__["CustomerService"], _services_cart_service__WEBPACK_IMPORTED_MODULE_2__["CartService"]])
     ], CustomerComponent);
     return CustomerComponent;
 }());
@@ -474,7 +1093,7 @@ module.exports = "<div>\n    <router-outlet></router-outlet>\n    <nav class=\"n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJsYXp5LWxvYWQvbGF6eS1sb2FkLmNvbXBvbmVudC5zY3NzIn0= */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvbW9kdWxlcy9sYXp5LWxvYWQvbGF6eS1sb2FkLmNvbXBvbmVudC5zY3NzIn0= */"
 
 /***/ }),
 
@@ -539,12 +1158,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customer_customer_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./customer/customer.component */ "./src/modules/lazy-load/customer/customer.component.ts");
 /* harmony import */ var _services_customer_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../services/customer.service */ "./src/modules/services/customer.service.ts");
 /* harmony import */ var _services_api_request_handler__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../services/api-request-handler */ "./src/modules/services/api-request-handler.ts");
+/* harmony import */ var _services_cart_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../services/cart.service */ "./src/modules/services/cart.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -572,7 +1193,7 @@ var LazyLoadModule = /** @class */ (function () {
                     provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HTTP_INTERCEPTORS"],
                     useClass: _services_api_request_handler__WEBPACK_IMPORTED_MODULE_9__["APIRequestHandler"],
                     multi: true
-                }, _services_customer_service__WEBPACK_IMPORTED_MODULE_8__["CustomerService"]],
+                }, _services_customer_service__WEBPACK_IMPORTED_MODULE_8__["CustomerService"], _services_cart_service__WEBPACK_IMPORTED_MODULE_10__["CartService"]],
             bootstrap: [_lazy_load_component__WEBPACK_IMPORTED_MODULE_5__["LazyLoadComponent"]]
         })
     ], LazyLoadModule);
@@ -648,7 +1269,6 @@ var APIRequestHandler = /** @class */ (function () {
             }
         });
         return next.handle(request).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (event) {
-            debugger;
             if (event instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpResponse"] && ~~(event.status / 100) > 3) {
                 console.info('HttpResponse::event =', event, ';');
             }
@@ -668,6 +1288,46 @@ var APIRequestHandler = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], APIRequestHandler);
     return APIRequestHandler;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/modules/services/cart.service.ts":
+/*!**********************************************!*\
+  !*** ./src/modules/services/cart.service.ts ***!
+  \**********************************************/
+/*! exports provided: CartService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CartService", function() { return CartService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var CartService = /** @class */ (function () {
+    function CartService() {
+    }
+    CartService.prototype.setCustomer = function (cus) {
+        this.customer = cus;
+    };
+    CartService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [])
+    ], CartService);
+    return CartService;
 }());
 
 
@@ -713,6 +1373,9 @@ var CustomerService = /** @class */ (function () {
             return arr;
         }));
         //.map(r => <Customer[]>r.json());
+    };
+    CustomerService.prototype.getAssets = function () {
+        return this._http.get("http://apidocumentation.optimosoftware.co.uk/OptimoWebAPI/Test/api/V4.1/assets?page.number=1&page.size=5&include=venue");
     };
     CustomerService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
