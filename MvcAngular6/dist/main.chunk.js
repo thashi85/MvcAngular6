@@ -1377,6 +1377,11 @@ var CustomerService = /** @class */ (function () {
     CustomerService.prototype.getAssets = function () {
         return this._http.get("http://apidocumentation.optimosoftware.co.uk/OptimoWebAPI/Test/api/V4.1/assets?page.number=1&page.size=5&include=venue");
     };
+    CustomerService.prototype.getStrings = function (id) {
+        return this._http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].ApiUrl + "api/v1/customers/notes/" + id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+            return response;
+        }));
+    };
     CustomerService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'

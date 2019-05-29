@@ -163,6 +163,7 @@
     <TypeScriptCompile Include="src\modules\lazy-load\order\order.component.ts" />
     <TypeScriptCompile Include="src\modules\lazy-load\order\order.module.ts" />
     <TypeScriptCompile Include="src\modules\models\customer.ts" />
+    <TypeScriptCompile Include="src\modules\models\person.ts" />
     <TypeScriptCompile Include="src\modules\services\api-request-handler.ts" />
     <TypeScriptCompile Include="src\modules\services\cart.service.spec.ts" />
     <TypeScriptCompile Include="src\modules\services\cart.service.ts" />

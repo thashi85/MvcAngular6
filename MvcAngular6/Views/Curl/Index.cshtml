@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@section head{
+<script src="~/Scripts/require.js"></script>
+    }
+
+<h2>Index</h2>
+
+@section scripts{
+    var _http='http'; 
+    require(['http'], result => {_http = result;});
+}

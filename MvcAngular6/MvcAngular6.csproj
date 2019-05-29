@@ -166,12 +166,16 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\CustomerController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\CurlController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LazyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompressUtility.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\ReflectionTest.cs" />
+    <Compile Include="Models\ServiceUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +266,8 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_EmptyLayout.cshtml" />
+    <Content Include="Views\Curl\Index.cshtml" />
+    <Content Include="Views\Home\Reflection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

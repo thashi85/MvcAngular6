@@ -10,15 +10,17 @@ namespace MvcAngular6
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
+          
             // Web API routes
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "Default_Api",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { controller="Customer", action= "GetCustomers", id = RouteParameter.Optional}
+
             );
+
         }
     }
 }

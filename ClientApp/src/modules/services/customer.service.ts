@@ -30,4 +30,12 @@ export class CustomerService {
         return this._http.get("http://apidocumentation.optimosoftware.co.uk/OptimoWebAPI/Test/api/V4.1/assets?page.number=1&page.size=5&include=venue");
          
     }
+
+    getStrings(id): Observable<string[]> {
+        return this._http.get(environment.ApiUrl + "api/v1/customers/notes/" + id).pipe(map((response) =>
+        {            
+            return (response as string[]);
+        }));
+        
+    }
 }

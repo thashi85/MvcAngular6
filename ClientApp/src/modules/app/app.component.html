@@ -17,5 +17,12 @@
     <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
   </li>
 </ul>
-
+<div>
+    <h3 *ngIf="person">
+        
+        {{person.firstName}} {{person.lastName}}
+    </h3>
+    <button type="button" (click)="changeName()">Change Name</button>
+    <button type="button" (click)="changeObject()">Change Object</button>
+</div>
 <router-outlet></router-outlet>
